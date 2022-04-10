@@ -1,24 +1,49 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { useState, useEffect } from 'react';
+import ProductList from './Components/ProductList/ProductList';
+import useModal from './Components/Modal/Modal';
+import SetProduct from './Components/SetProduct/SetProduct';
+import { productsApi } from './store/productsApi';
+import { Button, Box } from '@mui/material';
+import BarLoader from 'react-spinners/ClipLoader';
 
 function App() {
+  const [products, setProducts] = useState([]);
+  const { isModalOpen, toggleModal, style } = useModal();
+
+  const { data, error, isLoading } =
+    productsApi.endpoints.getProducts.useQuery('');
+
+  const deleteProduct = (id: string) => {
+    setProducts(products.filter((product: any) => product.id !== id));
+  };
+
+  useEffect(() => {
+    setProducts(data);
+  }, [data]);
+  let product = '';
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='Container'>
+      <h1>ProductList</h1>
+
+      {!isLoading && (
+        <Button
+          sx={{ marginBottom: '25px' }}
+          onClick={toggleModal}
+          variant='contained'>
+          Add Product
+        </Button>
+      )}
+      {isLoading && <BarLoader loading={isLoading} size={150} />}
+      <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+        <ProductList deleteProduct={deleteProduct} products={products} />
+      </Box>
+      <SetProduct
+        productData={product}
+        isOpen={isModalOpen}
+        style={style}
+        toggleModal={toggleModal}
+      />
     </div>
   );
 }
