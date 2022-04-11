@@ -9,12 +9,7 @@ interface ModalProps {
   productData: any;
 }
 
-const SetProduct = ({
-  isOpen,
-  toggleModal,
-  style,
-  productData,
-}: ModalProps) => {
+const SetProduct = ({ isOpen, toggleModal, style, productData }: ModalProps) => {
   const [comment, setComment] = useState('');
 
   const [product, setProduct] = useState({
@@ -53,7 +48,6 @@ const SetProduct = ({
     if (productData === '') {
       addProduct(product);
     } else {
-      console.log(product);
       editProduct({ ...productData, ...product });
     }
   };
@@ -123,9 +117,7 @@ const SetProduct = ({
               onChange={setComments}
             />
           </FormControl>
-          <Box
-            onClick={toggleModal}
-            sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
+          <Box onClick={toggleModal} sx={{ display: 'flex', justifyContent: 'space-evenly' }}>
             <Button
               onClick={(e) => onFormSubmit(e, productData)}
               sx={{ width: 100 }}
@@ -134,11 +126,7 @@ const SetProduct = ({
               color='success'>
               Confirm
             </Button>
-            <Button
-              onClick={toggleModal}
-              sx={{ width: 100 }}
-              variant='contained'
-              color='error'>
+            <Button onClick={toggleModal} sx={{ width: 100 }} variant='contained' color='error'>
               Cancel
             </Button>
           </Box>

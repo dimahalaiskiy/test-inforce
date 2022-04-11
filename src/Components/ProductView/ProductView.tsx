@@ -6,8 +6,9 @@ import RemoveModal from '../RemoveModal/RemoveModal';
 
 const ProductView = ({ product, deleteProductFromState }: any) => {
   const [isOpen, setIsOpen] = useState(false);
+  console.log(product);
 
-  let { id, imageUrl, name, count, weight } = product;
+  let { id, imageUrl, name, count, weight, heidth, width } = product;
   const { isModalOpen, toggleModal, style } = useModal();
 
   const toggleDeleteModal = () => {
@@ -28,12 +29,14 @@ const ProductView = ({ product, deleteProductFromState }: any) => {
           width='230px'
           height='200px'
           src={imageUrl}
-          alt='product'
+          alt='product photos'
         />
-        <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-            <p className='Paragraph'>weight: {weight} g</p>
             <p className='Paragraph'>count: {count}</p>
+            <p className='Paragraph'>heidth: {heidth}</p>
+            <p className='Paragraph'>width: {width}</p>
+            <p className='Paragraph'>weight: {weight} g</p>
           </Box>
           <Box
             sx={{
@@ -62,9 +65,7 @@ const ProductView = ({ product, deleteProductFromState }: any) => {
               product={product}
               style={style}
               isOpen={isOpen}
-              toggleModal={toggleDeleteModal}>
-              HI
-            </RemoveModal>
+              toggleModal={toggleDeleteModal}></RemoveModal>
           </Box>
         </Box>
       </Box>
